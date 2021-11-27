@@ -21,5 +21,8 @@
     "eslint": "^8.3.0",
     "nodemon": "^2.0.15"
   },
-  "bin": "index.js"
+  "bin": "index.js",
+  "publishConfig": {
+    "access": "public"
+  }
 }

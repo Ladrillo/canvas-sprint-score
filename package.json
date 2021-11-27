@@ -1,0 +1,25 @@
+{
+  "name": "@ladrillo/canvas-sprint-score",
+  "version": "0.0.1",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node $1",
+    "dev": "nodemon --inspect index.js $1",
+    "build": "babel index.js -d ./dist"
+  },
+  "author": "Gabriel Cabrejas",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ladrillo/canvas-sprint-score.git"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "eslint": "^8.3.0",
+    "nodemon": "^2.0.15"
+  },
+  "bin": "index.js"
+}

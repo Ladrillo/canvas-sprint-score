@@ -1,9 +1,9 @@
 {
   "name": "@ladrillo/total-score",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "type": "commonjs",
   "scripts": {
-    "dev": "nodemon --inspect src/index.mjs $1",
-    "prepublish": "babel src/index.mjs -d ./lib && mv lib/index.js lib/index.cjs"
+    "dev": "nodemon --inspect index.js $1"
   },
   "author": "Gabriel Cabrejas",
   "license": "ISC",
@@ -12,13 +12,10 @@
     "url": "git+https://github.com/Ladrillo/canvas-sprint-score.git"
   },
   "devDependencies": {
-    "@babel/cli": "^7.16.0",
-    "@babel/core": "^7.16.0",
-    "@babel/preset-env": "^7.16.4",
     "eslint": "^8.3.0",
     "nodemon": "^2.0.15"
   },
-  "bin": "./index.cjs",
+  "bin": "./index.js",
   "publishConfig": {
     "access": "public"
   }

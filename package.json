@@ -1,14 +1,11 @@
 {
   "name": "@ladrillo/canvas-sprint-score",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --inspect index.js $1",
-    "build": "babel index.js -d ./bin"
-  },
-  "engines": {
-    "node": ">=14.17.0"
+    "dev": "nodemon --inspect src/index.js $1",
+    "prepublish": "babel src/index.js -d ./lib"
   },
   "author": "Gabriel Cabrejas",
   "license": "ISC",

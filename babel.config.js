@@ -1,6 +1,6 @@
 export default {
   plugins: [],
   presets: [
-    ['@babel/preset-env', { targets: { node: 8 } }]
+    ['@babel/preset-env', { targets: { node: 6 } }]
   ],
 }

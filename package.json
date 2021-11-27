@@ -1,12 +1,12 @@
 {
   "name": "@ladrillo/canvas-sprint-score",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "index.mjs",
   "type": "module",
   "scripts": {
-    "start": "node $1",
-    "dev": "nodemon --inspect index.js $1",
-    "build": "babel index.js -d ./dist"
+    "start": "node index.mjs $1",
+    "dev": "nodemon --inspect index.mjs $1",
+    "build": "babel index.mjs -d ./dist"
   },
   "author": "Gabriel Cabrejas",
   "license": "ISC",
@@ -21,7 +21,7 @@
     "eslint": "^8.3.0",
     "nodemon": "^2.0.15"
   },
-  "bin": "index.js",
+  "bin": "index.mjs",
   "publishConfig": {
     "access": "public"
   }

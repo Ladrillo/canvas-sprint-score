@@ -1,7 +1,6 @@
 {
   "name": "@ladrillo/canvas-sprint-score",
-  "version": "0.0.3",
-  "main": "index.mjs",
+  "version": "0.0.4",
   "type": "module",
   "scripts": {
     "start": "node index.mjs $1",

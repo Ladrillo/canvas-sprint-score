@@ -9,9 +9,8 @@ if (!fileName) {
   process.exit(1)
 }
 
-const minusExtension = fileName.split(/\.csv$/i)[0]
-
 const csvPath = path.resolve(process.cwd(), fileName)
+const minusExtension = fileName.split(/\.csv$/i)[0]
 const convertedCsvPath = path.resolve(process.cwd(), `${minusExtension}-converted.csv`)
 
 fs.readFile(csvPath)
@@ -36,4 +35,8 @@ fs.readFile(csvPath)
   })
   .then((data) => {
     process.stdout.write(data.toString())
+  })
+  .catch(() => {
+    process.stderr.write('\nYou need to provide a VALID .csv file to convert\n\n')
+    process.exit(1)
   })

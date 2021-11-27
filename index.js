@@ -11,8 +11,8 @@ if (!fileName) {
 
 const minusExtension = fileName.split(/\.csv$/i)[0]
 
-const csvPath = path.resolve(__dirname, fileName)
-const convertedCsvPath = path.resolve(__dirname, `${minusExtension}-converted.csv`)
+const csvPath = path.resolve(process.cwd(), fileName)
+const convertedCsvPath = path.resolve(process.cwd(), `${minusExtension}-converted.csv`)
 
 fs.readFile(csvPath)
   .then(data => {

@@ -1,9 +1,9 @@
 {
   "name": "@ladrillo/canvas-sprint-score",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "scripts": {
-    "start": "node index.mjs $1",
+    "start": "node bin/index.js $1",
     "dev": "nodemon --inspect index.mjs $1",
     "build": "babel index.mjs -d ./bin"
   },

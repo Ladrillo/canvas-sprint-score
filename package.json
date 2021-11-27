@@ -1,6 +1,6 @@
 {
   "name": "@ladrillo/total-score",
-  "version": "0.0.14",
+  "version": "0.0.1",
   "scripts": {
     "dev": "nodemon --inspect src/index.mjs $1",
     "prepublish": "babel src/index.mjs -d ./lib && mv lib/index.js lib/index.cjs"

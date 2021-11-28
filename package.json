@@ -1,9 +1,12 @@
 {
   "name": "@ladrillo/total-score",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "commonjs",
   "scripts": {
-    "dev": "nodemon --inspect index.js $1"
+    "dev": "nodemon --inspect index.js $1",
+    "convert": "node index.js fixtures/original.csv",
+    "test": "npm run convert && jest",
+    "prepublish": "npm test"
   },
   "author": "Gabriel Cabrejas",
   "license": "ISC",
@@ -12,7 +15,9 @@
     "url": "git+https://github.com/Ladrillo/canvas-sprint-score.git"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.3",
     "eslint": "^8.3.0",
+    "jest": "^27.3.1",
     "nodemon": "^2.0.15"
   },
   "bin": "./index.js",

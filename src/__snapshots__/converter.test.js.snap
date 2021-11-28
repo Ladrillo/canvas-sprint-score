@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`converted matches snapshot 1`] = `
+"\\"Smith,  Zach\\", 0.00
+\\"Poole,  Adam\\", 6.51
+\\"Sun,  Mary\\", 61.56
+\\"Lucas,  Jason\\", 24.35
+\\"Price,  Katherine\\", 89.38"
+`;

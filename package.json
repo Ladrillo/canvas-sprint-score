@@ -1,12 +1,12 @@
 {
   "name": "@ladrillo/total-score",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "commonjs",
   "scripts": {
     "dev": "nodemon --inspect index.js $1",
     "convert": "node index.js fixtures/original.csv",
     "test": "npm run convert && jest",
-    "prepublishOnly": "npm test || exit 1"
+    "prepublishOnly": "npm i && npm test || exit 1"
   },
   "author": "Gabriel Cabrejas",
   "license": "ISC",

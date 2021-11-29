@@ -26,7 +26,7 @@ module.exports = function () {
       const shorterLines = []
       lines.forEach(line => {
         const split = line.split(',')
-        const result = `${split[0]}, ${split[1]}, ${split[split.length - 1]}`
+        const result = `${split[0]},${split[1]},${split[split.length - 1]}`
         shorterLines.push(result)
       })
       return fs.writeFile(convertedCsvPath, shorterLines.join('\n'))

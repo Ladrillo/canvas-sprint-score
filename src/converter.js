@@ -3,14 +3,14 @@ const fs = require('fs')
 const csv = require('csv-parser')
 
 const patterns = [
-  [/^student/i, 'student'],
+  [/^student$/i, 'student'],
   [/^module 1 project/i, 'module_1'],
   [/^module 2 project/i, 'module_2'],
   [/^module 3 project/i, 'module_3'],
   [/^module 4 project/i, 'module_4'],
   [/^cfu questions final score$/i, 'cfu_questions'],
-  [/^sprint challenge submission \([1-9]\d*\)$/i, 'sprint_challenge'],
   [/^sprint assessment final score$/i, 'sprint_assessment'],
+  [/^sprint challenge submissions final score$/i, 'sprint_challenge'],
   [/^final score$/i, 'total_score'],
 ]
 
@@ -56,16 +56,14 @@ module.exports = async function () {
       patterns.forEach(pat => {
         csv += `${pat[1]},`
       })
-      csv = csv.slice(0, csv.length - 1)
-      csv += '\n'
+      csv = csv.slice(0, csv.length - 1) + '\n'
 
       // add student rows
       rows.forEach(row => {
         patterns.forEach(pat => {
           csv += `${row[pat[1]].replace(',', '')},`
         })
-        csv = csv.slice(0, csv.length - 1)
-        csv += '\n'
+        csv = csv.slice(0, csv.length - 1) + '\n'
       })
       writeStreamCSV.write(csv)
     })

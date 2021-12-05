@@ -1,5 +1,6 @@
-"Smith, Zach",0.00
-"Poole, Adam",6.51
-"Sun, Mary",61.56
-"Lucas, Jason",24.35
-"Price, Katherine",89.38
+student,module_1,module_2,module_3,module_4,cfu_questions,sprint_challenge,sprint_assessment,total_score
+Smith Zach,0,0,0,0,0.00,0,0.00,0.00
+Poole Adam,1.00,0.23,0.19,0,31.58,0,0.00,6.51
+Sun Mary,5.00,5.00,5.00,0,36.84,2.93,80.00,61.56
+Lucas Jason,4.67,5.00,2.19,0,42.11,0.32,0.00,24.35
+Price Katherine,5.00,5.00,5.00,0,84.21,5.00,80.00,89.38

@@ -1,54 +1,72 @@
 #!/usr/bin/env node
 const fs = require('fs')
-const path = require('path')
+const csv = require('csv-parser')
 
-module.exports = async function () {
-  const fileName = process.argv[2]
+const patterns = [
+  [/^student/i, 'student'],
+  [/^module 1 project/i, 'module_1'],
+  [/^module 2 project/i, 'module_2'],
+  [/^module 3 project/i, 'module_3'],
+  [/^module 4 project/i, 'module_4'],
+  [/^cfu questions final score$/i, 'cfu_questions'],
+  [/^sprint challenge submission \([1-9]\d*\)$/i, 'sprint_challenge'],
+  [/^sprint assessment final score$/i, 'sprint_assessment'],
+  [/^final score$/i, 'total_score'],
+]
 
-  if (!fileName || !fs.existsSync(fileName)) {
-    console.log('Provide a path to a file that exists.')
-    process.exit(1)
-  }
-  console.log('ready to rock and roll...!')
+const mapHeaders = ({ header }) => {
+  const pattern = patterns.find(pat => pat[0].test(header))
+  return pattern ? pattern[1] : null
 }
 
-// module.exports = function () {
-//   const fileName = process.argv[2]
+const mapValues = ({ value }) => {
+  return value || '0'
+}
 
-//   if (!fileName) {
-//     process.stderr.write('\nProvide a .csv file to convert\n\n')
-//     process.exit(1)
-//   }
+module.exports = async function () {
+  const filePath = process.argv[2]
 
-//   const csvPath = path.resolve(process.cwd(), fileName)
-//   const minusExtension = fileName.split(/\.csv$/i)[0]
-//   const convertedCsvPath = path.resolve(process.cwd(), `${minusExtension}-converted.csv`)
+  if (!filePath || !fs.existsSync(filePath)) {
+    console.log('Provide a valid path to a CSV file.')
+    process.exit(1)
+  }
 
-//   return fs.readFile(csvPath)
-//     .then(data => {
-//       const lines = data
-//         .toString()
-//         .trim()
-//         .split('\n')
-//         .slice(2)
-//         .filter(line => line.slice(0, 8) !== '"Student')
+  const minusExtension = filePath.split(/\.csv$/i)[0]
+  const filePathJSON = `${minusExtension}.json`
+  const filePathCSV = `${minusExtension}-converted.csv`
 
-//       const shorterLines = []
-//       lines.forEach(line => {
-//         const split = line.split(',')
-//         const result = `${split[0]},${split[1]},${split[split.length - 1]}`
-//         shorterLines.push(result)
-//       })
-//       return fs.writeFile(convertedCsvPath, shorterLines.join('\n'))
-//     })
-//     .then(() => {
-//       return fs.readFile(convertedCsvPath)
-//     })
-//     .then((data) => {
-//       process.stdout.write(data.toString())
-//     })
-//     .catch(() => {
-//       process.stderr.write('\nProvide a VALID .csv file to convert\n\n')
-//       process.exit(1)
-//     })
-// }
+  const readStream = fs.createReadStream(filePath)
+  const writeStreamJSON = fs.createWriteStream(filePathJSON)
+  const writeStreamCSV = fs.createWriteStream(filePathCSV)
+
+  let rows = []
+
+  readStream
+    .pipe(csv({ mapHeaders, mapValues }))
+    .on('data', data => {
+      rows.push(data)
+    })
+    .on('end', () => {
+      rows = rows.slice(1).filter(row => row.student !== 'Student, Test')
+      writeStreamJSON.write(JSON.stringify(rows))
+
+      let csv = ''
+
+      // add header row
+      patterns.forEach(pat => {
+        csv += `${pat[1]},`
+      })
+      csv = csv.slice(0, csv.length - 1)
+      csv += '\n'
+
+      // add student rows
+      rows.forEach(row => {
+        patterns.forEach(pat => {
+          csv += `${row[pat[1]].replace(',', '')},`
+        })
+        csv = csv.slice(0, csv.length - 1)
+        csv += '\n'
+      })
+      writeStreamCSV.write(csv)
+    })
+}

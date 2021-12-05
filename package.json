@@ -16,12 +16,15 @@
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
-    "eslint": "^8.3.0",
-    "jest": "^27.3.1",
+    "eslint": "^8.4.0",
+    "jest": "^27.4.3",
     "nodemon": "^2.0.15"
   },
   "bin": "./index.js",
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0"
   }
 }

@@ -2,6 +2,22 @@
 const fs = require('fs')
 const csv = require('csv-parser')
 
+process.setUncaughtExceptionCaptureCallback(error => {
+  console.error('Something went wrong processing students.', error)
+  process.exit(1)
+})
+
+const logValidationError = () => {
+  console.error('Provide path to a csv file.')
+  console.error(`
+    Usage:\n
+    npx @ladrillo/total-score@lastest ./foo.csv          # relative path
+    npx @ladrillo/total-score@lastest foo.csv            # relative path
+    npx @ladrillo/total-score@lastest /Users/foo/foo.csv # absolute path
+  `)
+  process.exit(1)
+}
+
 const patterns = [
   [/^student$/i, 'student'],
   [/^module 1 project/i, 'module_1'],
@@ -27,12 +43,18 @@ module.exports = async function () {
   const filePath = process.argv[2]
 
   if (!filePath || !fs.existsSync(filePath)) {
-    console.log('Provide a valid path to a CSV file.')
-    process.exit(1)
+    logValidationError()
+  }
+
+  const splitByDot = filePath.split('.')
+  const extension = splitByDot[splitByDot.length - 1]
+
+  if (!/csv$/i.test(extension)) {
+    logValidationError()
   }
 
   const minusExtension = filePath.split(/\.csv$/i)[0]
-  const filePathJSON = `${minusExtension}.json`
+  const filePathJSON = `${minusExtension}-converted.json`
   const filePathCSV = `${minusExtension}-converted.csv`
 
   const readStream = fs.createReadStream(filePath)
@@ -48,6 +70,12 @@ module.exports = async function () {
     })
     .on('end', () => {
       rows = rows.slice(1).filter(row => row.student !== 'Student, Test')
+
+      if (!rows.length) {
+        console.log('No students were processed. Was the csv in the correct format?')
+        process.exit(0)
+      }
+
       writeStreamJSON.write(JSON.stringify(rows))
 
       let csv = ''
@@ -66,5 +94,11 @@ module.exports = async function () {
         csv = csv.slice(0, csv.length - 1) + '\n'
       })
       writeStreamCSV.write(csv)
+
+      console.log(`Successfully processed ${rows.length} students.`)
+    })
+    .on('error', error => {
+      console.error('Error processing students.', error)
+      process.exit(1)
     })
 }

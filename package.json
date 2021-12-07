@@ -1,6 +1,6 @@
 {
   "name": "@ladrillo/total-score",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "commonjs",
   "scripts": {
     "dev": "nodemon --inspect index.js $1",
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
-    "eslint": "^8.4.0",
+    "eslint": "^8.4.1",
     "jest": "^27.4.3",
     "nodemon": "^2.0.15"
   },

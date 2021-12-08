@@ -1,6 +1,6 @@
 {
   "name": "@ladrillo/total-score",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "commonjs",
   "scripts": {
     "dev": "nodemon --inspect index.js $1",

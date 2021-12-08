@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const csv = require('csv-parser')
+const fields = require('./fields.js')
 
 process.setUncaughtExceptionCaptureCallback(error => {
   console.error('Something went wrong processing students.', error)
@@ -18,21 +19,9 @@ const logValidationError = () => {
   process.exit(1)
 }
 
-const patterns = [
-  [/^student$/i, 'student'],
-  [/^module 1 project/i, 'module_1'],
-  [/^module 2 project/i, 'module_2'],
-  [/^module 3 project/i, 'module_3'],
-  [/^module 4 project/i, 'module_4'],
-  [/^cfu questions final score$/i, 'cfu_questions'],
-  [/^sprint assessment final score$/i, 'sprint_assessment'],
-  [/^sprint challenge submissions final score$/i, 'sprint_challenge'],
-  [/^final score$/i, 'total_score'],
-]
-
 const mapHeaders = ({ header }) => {
-  const pattern = patterns.find(pat => pat[0].test(header))
-  return pattern ? pattern[1] : null
+  const field = fields.find(field => field[0].test(header))
+  return field ? field[1] : null
 }
 
 const mapValues = ({ value }) => {
@@ -81,14 +70,14 @@ module.exports = async function () {
       let csv = ''
 
       // add header row
-      patterns.forEach(pat => {
+      fields.forEach(pat => {
         csv += `${pat[1]},`
       })
       csv = csv.slice(0, csv.length - 1) + '\n'
 
       // add student rows
       rows.forEach(row => {
-        patterns.forEach(pat => {
+        fields.forEach(pat => {
           csv += `${row[pat[1]].replace(',', '')},`
         })
         csv = csv.slice(0, csv.length - 1) + '\n'
